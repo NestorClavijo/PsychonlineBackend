@@ -18,5 +18,5 @@ public class Especialidad {
     private Long especialidad_id;
 
     @Column(name = "nombre",length=255 ,nullable=false)
-    private String nombre;
+    private String nombresito;
 } 
