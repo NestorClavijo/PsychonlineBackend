@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "especialidad")
-public class Especialidad {
+@Table(name = "estado")
+public class Estado {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long especialidad_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long estado_id;
 
-    @Column(name = "nombre",length=255 ,nullable=false)
-    private String nombre;
-} 
+    @Column(name = "descripcion",length=255, nullable = false)
+    private String descripcion;
+}
