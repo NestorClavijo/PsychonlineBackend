@@ -40,6 +40,7 @@ public class MedicoServiceImpl implements MedicoService{
             medicoEncontrado.get().setPassword(medico.getPassword());
             medicoEncontrado.get().setImagen(medico.getImagen());
             medicoEncontrado.get().setTitulos(medico.getTitulos());
+            medicoEncontrado.get().setEstaVerificado(medico.getEstaVerificado());
             return this.newMedico(medicoEncontrado.get());
         }
         catch(Exception exc){

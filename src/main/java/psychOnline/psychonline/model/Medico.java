@@ -48,6 +48,9 @@ public class Medico implements UserDetails {
     @Column(name = "password",length=255 ,nullable=false)
     private String password;
 
+    @Column(name = "estaVerificado", nullable = false)
+    private Boolean estaVerificado;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
