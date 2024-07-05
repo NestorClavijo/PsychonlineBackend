@@ -2,7 +2,6 @@ package psychOnline.psychonline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import psychOnline.psychonline.model.Cita;
 import psychOnline.psychonline.model.Especialidad;
 import psychOnline.psychonline.service.EspecialidadService;
 

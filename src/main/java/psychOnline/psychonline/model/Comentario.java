@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @Entity
 @Data
 @Builder
@@ -30,6 +28,6 @@ public class Comentario {
     @Column(name = "descripcion",length=280 ,nullable=false)
     private String descripcion;
 
-    @Column(name = "calificacion",length=3 ,nullable=false)
-    private String calificacion;
+    @Column(name = "calificacion",nullable=false)
+    private Integer calificacion;
 }

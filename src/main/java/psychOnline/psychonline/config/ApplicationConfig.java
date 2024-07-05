@@ -12,10 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import psychOnline.psychonline.repository.AdminRepository;
 import psychOnline.psychonline.repository.MedicoRepository;
 import psychOnline.psychonline.repository.PacienteRepository;
-
-import java.util.Base64;
 
 @Configuration
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ public class ApplicationConfig {
 
     private final PacienteRepository pacienteRepository;
     private final MedicoRepository medicoRepository;
+    private final AdminRepository adminRepository;
 
     @Bean
     public AuthenticationManager authenticationManagerMedico(AuthenticationConfiguration config) throws Exception {
@@ -43,7 +43,10 @@ public class ApplicationConfig {
         return username -> {
             UserDetails user = pacienteRepository.findByUsername(username).orElse(null);
             if (user == null) {
-                user = medicoRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario no fue encontrado"));
+                user = medicoRepository.findByUsername(username).orElse(null);
+                if (user == null){
+                    user = adminRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario no fue encontrado"));
+                }
             }
             return user;
         };
