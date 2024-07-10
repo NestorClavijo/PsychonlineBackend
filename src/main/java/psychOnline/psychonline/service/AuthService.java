@@ -34,8 +34,10 @@ public class AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
         UserDetails paciente=pacienteRepository.findByUsername(request.getUsername()).orElseThrow();
         String token=jwtService.getToken(paciente);
+        long id= ((Paciente) paciente).getPaciente_id();
         return AuthResponse.builder()
                 .token(token)
+                .id(id)
                 .build();
     }
 
@@ -43,8 +45,10 @@ public class AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
         UserDetails medico=medicoRepository.findByUsername(request.getUsername()).orElseThrow();
         String token=jwtService.getToken(medico);
+        long id=((Medico) medico).getMedico_id();
         return AuthResponse.builder()
                 .token(token)
+                .id(id)
                 .build();
 
     }
