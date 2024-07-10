@@ -1,16 +1,14 @@
 package psychOnline.psychonline.endpoints;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import psychOnline.psychonline.DTO.ActualizarCitaDTO;
 import psychOnline.psychonline.DTO.NuevaHistoriaDTO;
 import psychOnline.psychonline.service.HistorialService;
 
 @RestController
 @RequestMapping("api/historial")
+@CrossOrigin(origins="http://localhost:4200")
 public class EndpointHistorial {
     @Autowired
     private HistorialService historialService;

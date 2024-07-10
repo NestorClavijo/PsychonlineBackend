@@ -1,9 +1,6 @@
 package psychOnline.psychonline.endpoints;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import psychOnline.psychonline.DTO.MedicoDTO;
 import psychOnline.psychonline.DTO.MedicoPerfilDTO;
 import psychOnline.psychonline.service.MedicoService;
@@ -13,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/medico")
+@CrossOrigin(origins="http://localhost:4200")
 public class EndpointMedico {
 
     private final MedicoService medicoService;

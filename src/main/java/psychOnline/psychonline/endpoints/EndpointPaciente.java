@@ -1,10 +1,7 @@
 package psychOnline.psychonline.endpoints;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import psychOnline.psychonline.DTO.CitaPacienteDTO;
 import psychOnline.psychonline.DTO.InfoPacienteDTO;
 import psychOnline.psychonline.DTO.PacientePerfilDTO;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/paciente")
+@CrossOrigin(origins="http://localhost:4200")
 public class EndpointPaciente {
 
     private final PacienteService pacienteService;
