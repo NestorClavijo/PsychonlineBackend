@@ -1,8 +1,10 @@
 package psychOnline.psychonline.service;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import psychOnline.psychonline.DTO.InfoPacienteDTO;
+import psychOnline.psychonline.DTO.PacientePerfilDTO;
 import psychOnline.psychonline.model.Historial;
 import psychOnline.psychonline.model.Paciente;
 import psychOnline.psychonline.repository.HistorialRepository;
@@ -16,8 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class PacienteServiceImpl implements PacienteService{
     @Autowired
-    private PacienteRepository pacienteRepository;
-    private HistorialRepository historialRepository;
+    private final PacienteRepository pacienteRepository;
+    private final HistorialRepository historialRepository;
+    private final EntityManager entityManager;
+
+    public PacienteServiceImpl(PacienteRepository pacienteRepository, HistorialRepository historialRepository, EntityManager entityManager) {
+        this.pacienteRepository = pacienteRepository;
+        this.historialRepository = historialRepository;
+        this.entityManager = entityManager;
+    }
 
     @Override
     public Paciente newPaciente(Paciente newPaciente) {
@@ -91,6 +100,26 @@ public class PacienteServiceImpl implements PacienteService{
 
             return pacienteDTO;
         }
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public PacientePerfilDTO obtenerPerfilUsuario(Long usuarioId) {
+        Paciente paciente = entityManager.find(Paciente.class, usuarioId);
+        if (paciente == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+
+        List<String> historias = historialRepository.findByPacienteId(usuarioId).stream()
+                .map(historial -> historial.getHistoria().getDescripcion())
+                .collect(Collectors.toList());
+
+        return new PacientePerfilDTO(
+                paciente.getNombre() + " " + paciente.getApellido(),
+                paciente.getUsername(),
+                paciente.getEmail(),
+                paciente.getTelefono(),
+                historias
+        );
     }
 }
