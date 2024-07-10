@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import psychOnline.psychonline.DTO.CitaDTO;
+import psychOnline.psychonline.DTO.PacienteDTO;
 import psychOnline.psychonline.model.Cita;
 import psychOnline.psychonline.model.Estado;
 import psychOnline.psychonline.model.Medico;
@@ -123,5 +124,35 @@ public class CitaServiceImpl implements CitaService{
                 c.getPaciente() != null ? c.getPaciente().getNombre() + " " + c.getPaciente().getApellido() : null,
                 c.getEstado().getDescripcion()
         )).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PacienteDTO> listarPacientesPorMedico(Long medicoId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Cita> query = cb.createQuery(Cita.class);
+        Root<Cita> cita = query.from(Cita.class);
+
+        cita.fetch("paciente", JoinType.INNER);
+        cita.fetch("estado", JoinType.INNER);
+
+        query.select(cita)
+                .where(
+                        cb.equal(cita.get("medico").get("medico_id"), medicoId),
+                        cb.equal(cita.get("estado").get("descripcion"), "Finalizada")
+                );
+
+        List<Cita> citas = entityManager.createQuery(query).getResultList();
+
+        return citas.stream()
+                .map(Cita::getPaciente)
+                .distinct()
+                .map(p -> new PacienteDTO(
+                        p.getPaciente_id(),
+                        p.getNombre() + " " + p.getApellido(),
+                        p.getEmail(),
+                        p.getTelefono()
+                ))
+                .collect(Collectors.toList());
     }
 }

@@ -5,11 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import psychOnline.psychonline.DTO.CitaDTO;
 import psychOnline.psychonline.DTO.CrearCitaRequest;
+import psychOnline.psychonline.DTO.PacienteDTO;
 import psychOnline.psychonline.model.Cita;
 import psychOnline.psychonline.service.CitaService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/cita")
@@ -37,5 +37,10 @@ public class EndpointCitas {
     @GetMapping("/medico/{medicoId}")
     public List<CitaDTO> listarCitasPorMedico(@PathVariable("medicoId") Long medico_id) {
         return citaService.listarCitasPorMedico(medico_id);
+    }
+
+    @GetMapping("/medico/{medicoId}/pacientes")
+    public List<PacienteDTO> listarPacientesPorMedico(@PathVariable("medicoId") Long medico_id) {
+        return citaService.listarPacientesPorMedico(medico_id);
     }
 }
