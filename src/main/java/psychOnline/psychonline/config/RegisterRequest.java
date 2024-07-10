@@ -19,5 +19,4 @@ public class RegisterRequest {
     String titulos;
     String username;
     String password;
-    String role;
 }
