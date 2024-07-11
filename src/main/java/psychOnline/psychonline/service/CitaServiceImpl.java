@@ -9,10 +9,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import psychOnline.psychonline.DTO.CitaDTO;
-import psychOnline.psychonline.DTO.CitaDetalleDTO;
-import psychOnline.psychonline.DTO.CitaPacienteDTO;
-import psychOnline.psychonline.DTO.PacienteDTO;
+import psychOnline.psychonline.DTO.*;
 import psychOnline.psychonline.model.Cita;
 import psychOnline.psychonline.model.Estado;
 import psychOnline.psychonline.model.Medico;
@@ -291,5 +288,15 @@ public class CitaServiceImpl implements CitaService{
 
         entityManager.persist(cita);
         return "Cita solicitada con exito";
+    }
+
+    public List<CitaAgendadaDTO> obtenerCitasAgendadas() {
+        List<Cita> citasAgendadas = citaRepository.findAllAgendadas();
+        return citasAgendadas.stream().map(cita -> new CitaAgendadaDTO(
+                cita.getCita_id(),
+                cita.getMedico().getNombre() + " " + cita.getMedico().getApellido(),
+                cita.getMedico().getEspecialidades().stream().map(especialidad -> especialidad.getNombre()).collect(Collectors.toList()),
+                cita.getFecha_hora()
+        )).collect(Collectors.toList());
     }
 }

@@ -65,9 +65,11 @@ public class AuthService {
                 .build();
 
         pacienteRepository.save(paciente);
+        long id= ((Paciente) paciente).getPaciente_id();
 
         return AuthResponse.builder()
                 .token(jwtService.getToken(paciente))
+                .id(id)
                 .build();
 
     }
@@ -89,8 +91,11 @@ public class AuthService {
 
         medicoRepository.save(medico);
 
+        long id=((Medico) medico).getMedico_id();
+
         return AuthResponse.builder()
                 .token(jwtService.getToken(medico))
+                .id(id)
                 .build();
     }
 
@@ -99,8 +104,11 @@ public class AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         UserDetails admin = (UserDetails) adminRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.getToken(admin);
+
+        long id =((Administrador) admin).getAdministrador_id();
         return AuthResponse.builder()
                 .token(token)
+                .id(id)
                 .build();
 
     }
@@ -114,8 +122,11 @@ public class AuthService {
 
         adminRepository.save(admin);
 
+        long id =((Administrador) admin).getAdministrador_id();
+
         return AuthResponse.builder()
                 .token(jwtService.getToken(admin))
+                .id(id)
                 .build();
 
     }

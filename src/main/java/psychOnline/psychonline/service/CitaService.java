@@ -1,9 +1,6 @@
 package psychOnline.psychonline.service;
 
-import psychOnline.psychonline.DTO.CitaDTO;
-import psychOnline.psychonline.DTO.CitaDetalleDTO;
-import psychOnline.psychonline.DTO.CitaPacienteDTO;
-import psychOnline.psychonline.DTO.PacienteDTO;
+import psychOnline.psychonline.DTO.*;
 import psychOnline.psychonline.model.Cita;
 
 import java.time.LocalDateTime;
@@ -27,4 +24,5 @@ public interface CitaService {
     String aceptarCita(Long citaID);
     List<CitaPacienteDTO> obtenerCitasPorPaciente(Long pacienteId);
     String solicitarCita(Long pacienteId, Long medicoId, LocalDateTime fechaHora);
+    List<CitaAgendadaDTO> obtenerCitasAgendadas();
 }

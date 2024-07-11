@@ -57,8 +57,6 @@ public class EndpointCitas {
         return citaService.listarCitasSolicitadasPorMedico(medicoId);
     }
 
-
-
     @PostMapping("/rechazar/{cita_id}")
     public ResponseEntity<String> rechazarCita(@PathVariable("cita_id") Long cita_id) {
         String mensaje = citaService.rechazarCita(cita_id);
@@ -77,5 +75,10 @@ public class EndpointCitas {
         Map<String, String> response = new HashMap<>();
         response.put("message", cita);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/agendadas")
+    public List<CitaAgendadaDTO> listarCitasAgendadas() {
+        return citaService.obtenerCitasAgendadas();
     }
 }
