@@ -7,7 +7,9 @@ import psychOnline.psychonline.DTO.*;
 import psychOnline.psychonline.model.Cita;
 import psychOnline.psychonline.service.CitaService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/cita")
@@ -28,9 +30,11 @@ public class EndpointCitas {
     }
 
     @PostMapping("/cancelar/{cita_id}")
-    public ResponseEntity<String> cancelarCita(@PathVariable("cita_id") Long cita_id) {
+    public ResponseEntity<Map<String, String>> cancelarCita(@PathVariable("cita_id") Long cita_id) {
         String mensaje = citaService.cancelarCita(cita_id);
-        return ResponseEntity.ok(mensaje);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/medico/{medicoId}")
@@ -53,6 +57,8 @@ public class EndpointCitas {
         return citaService.listarCitasSolicitadasPorMedico(medicoId);
     }
 
+
+
     @PostMapping("/rechazar/{cita_id}")
     public ResponseEntity<String> rechazarCita(@PathVariable("cita_id") Long cita_id) {
         String mensaje = citaService.rechazarCita(cita_id);
@@ -66,8 +72,10 @@ public class EndpointCitas {
     }
 
     @PostMapping("/solicitar")
-    public String solicitarCita(@RequestBody SolicitarCitaRequest request) {
+    public ResponseEntity<Map<String, String>> solicitarCita(@RequestBody SolicitarCitaRequest request) {
         String cita = citaService.solicitarCita(request.getPacienteId(), request.getMedicoId(), request.getFechaHora());
-        return cita;
+        Map<String, String> response = new HashMap<>();
+        response.put("message", cita);
+        return ResponseEntity.ok(response);
     }
 }
