@@ -17,6 +17,7 @@ import psychOnline.psychonline.model.Paciente;
 import psychOnline.psychonline.repository.CitaRepository;
 import psychOnline.psychonline.repository.EstadoRepository;
 import psychOnline.psychonline.repository.MedicoRepository;
+import psychOnline.psychonline.repository.PacienteRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,12 +30,14 @@ public class CitaServiceImpl implements CitaService{
     private final CitaRepository citaRepository;
     private final MedicoRepository medicoRepository;
     private final EstadoRepository estadoRepository;
-    private EntityManager entityManager;
+    private final PacienteRepository pacienteRepository;
+    private final EntityManager entityManager;
 
-    public CitaServiceImpl(CitaRepository citaRepository, MedicoRepository medicoRepository, EstadoRepository estadoRepository, EntityManager entityManager) {
+    public CitaServiceImpl(CitaRepository citaRepository, MedicoRepository medicoRepository, EstadoRepository estadoRepository, PacienteRepository pacienteRepository, EntityManager entityManager) {
         this.citaRepository = citaRepository;
         this.medicoRepository = medicoRepository;
         this.estadoRepository = estadoRepository;
+        this.pacienteRepository = pacienteRepository;
         this.entityManager = entityManager;
     }
 
@@ -79,11 +82,13 @@ public class CitaServiceImpl implements CitaService{
     }
 
     @Override
-    public String programarCita(Long citaId) {
+    public String programarCita(Long citaId, Long pacienteId) {
         Cita cita = citaRepository.findById(citaId).orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+        Paciente paciente = pacienteRepository.findById(pacienteId).orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
         Estado estadoProgramada = estadoRepository.findByDescripcion("Programada").orElseThrow(() -> new RuntimeException("Estado 'cancelada' no encontrado"));
 
         cita.setEstado(estadoProgramada);
+        cita.setPaciente(paciente);
         citaRepository.save(cita);
 
         return "Se ha programado la cita con éxito.";

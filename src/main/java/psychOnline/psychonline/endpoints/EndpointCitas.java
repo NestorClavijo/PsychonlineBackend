@@ -82,9 +82,9 @@ public class EndpointCitas {
         return citaService.obtenerCitasAgendadas();
     }
 
-    @PostMapping("/programar/{cita_id}")
-    public ResponseEntity<String> programarCita(@PathVariable("cita_id") Long cita_id) {
-        String mensaje = citaService.programarCita(cita_id);
+    @PostMapping("/programar")
+    public ResponseEntity<String> programarCita(@RequestBody ProgramarCitaRequest request) {
+        String mensaje = citaService.programarCita(request.getCita_id(), request.getPaciente_id());
         return ResponseEntity.ok(mensaje);
     }
 }

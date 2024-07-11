@@ -16,7 +16,7 @@ public interface CitaService {
 
     Cita crearCita(Long medicoId, LocalDateTime fechaHora);
     String cancelarCita(Long citaID);
-    String programarCita(Long citaID);
+    String programarCita(Long citaID, Long pacienteID);
     List<CitaDTO> listarCitasPorMedico(Long medicoId);
     List<PacienteDTO> listarPacientesPorMedico(Long medicoId);
     List<CitaDetalleDTO> listarCitasPasadasProgramadasPorMedico(Long medicoId);
