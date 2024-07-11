@@ -60,13 +60,17 @@ public class EndpointCitas {
     @PostMapping("/rechazar/{cita_id}")
     public ResponseEntity<String> rechazarCita(@PathVariable("cita_id") Long cita_id) {
         String mensaje = citaService.rechazarCita(cita_id);
-        return ResponseEntity.ok(mensaje);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response.toString());
     }
 
     @PostMapping("/aceptar/{cita_id}")
     public ResponseEntity<String> aceptarCita(@PathVariable("cita_id") Long cita_id) {
         String mensaje = citaService.aceptarCita(cita_id);
-        return ResponseEntity.ok(mensaje);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response.toString());
     }
 
     @PostMapping("/solicitar")
@@ -85,6 +89,8 @@ public class EndpointCitas {
     @PostMapping("/programar")
     public ResponseEntity<String> programarCita(@RequestBody ProgramarCitaRequest request) {
         String mensaje = citaService.programarCita(request.getCita_id(), request.getPaciente_id());
-        return ResponseEntity.ok(mensaje);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", mensaje);
+        return ResponseEntity.ok(response.toString());
     }
 }
