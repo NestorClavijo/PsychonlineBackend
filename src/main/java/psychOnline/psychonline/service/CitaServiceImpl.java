@@ -79,6 +79,17 @@ public class CitaServiceImpl implements CitaService{
     }
 
     @Override
+    public String programarCita(Long citaId) {
+        Cita cita = citaRepository.findById(citaId).orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+        Estado estadoProgramada = estadoRepository.findByDescripcion("Programada").orElseThrow(() -> new RuntimeException("Estado 'cancelada' no encontrado"));
+
+        cita.setEstado(estadoProgramada);
+        citaRepository.save(cita);
+
+        return "Se ha programado la cita con éxito.";
+    }
+
+    @Override
     public String aceptarCita(Long citaId) {
         Cita cita = citaRepository.findById(citaId).orElseThrow(() -> new RuntimeException("Cita no encontrada"));
         Estado estadoCancelada = estadoRepository.findByDescripcion("Programada").orElseThrow(() -> new RuntimeException("Estado 'cancelada' no encontrado"));

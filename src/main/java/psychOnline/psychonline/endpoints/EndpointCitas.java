@@ -81,4 +81,10 @@ public class EndpointCitas {
     public List<CitaAgendadaDTO> listarCitasAgendadas() {
         return citaService.obtenerCitasAgendadas();
     }
+
+    @PostMapping("/programar/{cita_id}")
+    public ResponseEntity<String> programarCita(@PathVariable("cita_id") Long cita_id) {
+        String mensaje = citaService.programarCita(cita_id);
+        return ResponseEntity.ok(mensaje);
+    }
 }
