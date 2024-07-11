@@ -11,7 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/medico")
 @CrossOrigin(origins="http://localhost:4200")
-public class EndpointMedico {
+public class
+EndpointMedico {
 
     private final MedicoService medicoService;
 
